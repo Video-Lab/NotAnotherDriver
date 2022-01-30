@@ -1,0 +1,22 @@
+{
+  "name": "notanotherdriver",
+  "version": "1.0.0",
+  "description": "Not Another Driver - An app to help break bad driving habits. Submission for TAMUHack 2022.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Video-Lab/NotAnotherDriver.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Video-Lab/NotAnotherDriver/issues"
+  },
+  "homepage": "https://github.com/Video-Lab/NotAnotherDriver#readme",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}
