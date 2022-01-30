@@ -23,9 +23,10 @@ app.get('/scores', function(req,res){
 
     res.render("scores", {title: 'Driving Reports', ids: ids})
 })
-app.get('/score/:id', function(req,res){
-    data = fs.readFileSync("./data/score_" + req.params.id + ".csv").toString();
+app.get('/scores/:id', function(req,res){
+    data = fs.readFileSync("./data/score_" + req.params.id + ".json").toString();
     score = JSON.parse(data);
+    score.score = score.score.toPrecision(2);
     res.render("report", {title: "Driving Report", score: score})
 })
 
