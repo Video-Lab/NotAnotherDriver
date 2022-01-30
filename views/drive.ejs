@@ -1,0 +1,24 @@
+<%- include ('./partials/header'); %>
+<link rel="stylesheet" href="/public/css/style.css">
+<style>
+    h1::after {
+        content: "";
+        display: block;
+        width: 50%;
+        margin: auto;
+        background: #3492eb;
+        opacity: 80%;
+        height: 3px;
+        margin-top: 5px;
+    }
+
+
+</style>
+</head>
+<body style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh;">
+
+<div class="container" style="width: fit-content; text-align: center;">
+    <p style="display: block; margin: 2em; font-size: 1.5em;">Data is being recorded. Your report will be generated when you stop driving.</p>
+    <a href="/scores" class="btn btn-primary" style="font-size: 1em; display: block; margin: 2em auto; width: fit-content;">Stop Driving</a>
+</div>
+<%- include ('./partials/footer'); %>
