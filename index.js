@@ -12,7 +12,7 @@ app.get('/menu', function(req,res){
 })
 
 app.get('/drive', function(req,res) {
-    res.send("test")
+    res.render('drive', {title: 'Drive'})
 })
 
 app.get('/scores', function(req,res){
