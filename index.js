@@ -7,4 +7,19 @@ app.get('/', function(req,res) {
     res.render('index', {title: 'Home'})
 })
 
+app.get('/menu', function(req,res){
+    res.render('menu', {title: 'Menu'})
+})
+
+app.get('/drive', function(req,res) {
+    res.send("test")
+})
+
+app.get('/scores', function(req,res){
+    res.send("test")
+})
+app.get('/score/:id', function(req,res){
+    res.send("test")
+})
+
 app.listen(3000);
