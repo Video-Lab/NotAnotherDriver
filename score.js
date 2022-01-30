@@ -1,61 +1,10 @@
 const fs = require('fs');
 
 BATCH_SIZE = 10; // How many time periods to check in average for lane detection
+BRAKE_THRESHOLD = 1000
 
-
-function parseDetectionFile(id) {
-    data = fs.readFileSync("./data/detection_" + id + ".csv").toString();
-    data = data.split("\n").slice(1);
-    d1 = []
-    d2 = []
-    for(var i = 0; i < data.length; i++) {
-        values = data[i].split(",");
-        d1.push(parseFloat(values[0],10))
-        d2.push(parseFloat(values[1],10))
-    }
-
-    return [d1,d2]
-}
-
-function getBrakeSpikes(detectionValues) {
-    var i = 0;
-    d2 = detectionValues[1];
-    var spikes = 0;
-    while(i < d2.length-BATCH_SIZE) {
-        var avgSpike = 0;
-
-        for(var j = i; j <= i+BATCH_SIZE; j++) {
-            avgSpike += Math.abs(d2[j]);
-        }
-        avgSpike /= BATCH_SIZE;
-
-        for(var j = i; j <= i+BATCH_SIZE; j++) {
-            if(Math.abs(d2[j]) > avgSpike) {
-                spikes++;
-            }
-        }
-        i += BATCH_SIZE;
-    }
-
-    var avgSpike = 0;
-
-    for(var j = i; j <= data.length; j++) {
-        avgSpike += d2[j];
-    }
-    avgSpike /= BATCH_SIZE;
-
-    for(var j = i; j <= data.length; j++) {
-        if(d2[j] > avgSpike) {
-            spikes++;
-        }
-    }
-
-    return spikes;
-}
-
-
-function parseSpeedFile(id) {
-    data = fs.readFileSync("./data/speed_" + id + ".csv").toString();
+function parseFile(id, type) {
+    data = fs.readFileSync("./data/" + type + "_" + id + ".csv").toString();
     data = data.split("\n").slice(1);
     d = []
     for(var i = 0; i < data.length; i++) {
@@ -64,6 +13,34 @@ function parseSpeedFile(id) {
 
     return d;
 }
+
+function areasToSlopes(a) {
+    s = []
+    for(var i = 1; i < a.length-1; i++) {
+        s.push((s[i]-s[i-1]))
+    }
+    return s
+}
+
+function getBrakeSpikes(s) {
+    var inBrake = false;
+    var brakes = 0;
+
+    console.log(s)
+    for(var i = 0; i < s.length; i++) {
+        if(Math.abs(s[i]) > BRAKE_THRESHOLD && !inBrake) {
+            inBrake = true;
+            brakes++;
+        }
+
+        if(Math.abs(s[i]) < BRAKE_THRESHOLD && inBrake) {
+            inBrake = false;
+        }
+    }
+
+    return brakes;
+}
+
 function getSpeedViolations(s) {
     console.log(s)
     var violations = 0
@@ -105,5 +82,5 @@ function score(id) {
 }
 
 // console.log(getBrakeSpikes(parseDetectionFile('1e19fa82-a064-4fdb-af6c-63f4e8a2069d')))
-console.log(getSpeedViolations(parseSpeedFile('eee368be-dbce-4feb-af5f-709dedc20498')))
+console.log(getBrakeSpikes(parseFile('eee368be-dbce-4feb-af5f-709dedc20498', 'detection')))
 // export default score;
