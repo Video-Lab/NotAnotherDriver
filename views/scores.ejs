@@ -1,0 +1,28 @@
+<%- include ('./partials/header') %>
+<link rel="stylesheet" href="/public/css/style.css">
+<style>
+    h1::after {
+        content: "";
+        display: block;
+        width: 50%;
+        margin: auto;
+        background: #3492eb;
+        opacity: 80%;
+        height: 3px;
+        margin-top: 5px;
+    }
+
+    a {
+        display: block;
+    }
+</style>
+</head>
+<body style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh;">
+
+<div class="container" style="width: fit-content; text-align: center;">
+    <h1 style="font-weight: 300; text-transform: uppercase; letter-spacing: 4px; margin: 1em; font-size: 3em;">Driving Reports</h1>
+    <% for(var i=0; i<ids.length; i++) {%>
+    <a href="/scores/<%=ids[i]%>" class="btn btn-primary" style="font-size: 1em; display: block; margin: 0.5em auto;">Driving Report <%=i+1%></a>
+    <% } %>
+</div>
+<%- include ('./partials/footer') %>

@@ -2,6 +2,7 @@ var express = require('express')
 var app = express()
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
+var fs = require('fs');
 
 app.get('/', function(req,res) {
     res.render('index', {title: 'Home'})
@@ -16,10 +17,16 @@ app.get('/drive', function(req,res) {
 })
 
 app.get('/scores', function(req,res){
-    res.send("test")
+    var ids = []
+    data = fs.readFileSync("./public/misc/generated.txt").toString();
+    ids = data.split("\n")
+
+    res.render("scores", {title: 'Driving Reports', ids: ids})
 })
 app.get('/score/:id', function(req,res){
-    res.send("test")
+    data = fs.readFileSync("./data/score_" + req.params.id + ".csv").toString();
+    score = JSON.parse(data);
+    res.render("report", {title: "Driving Report", score: score})
 })
 
 app.listen(3000);
