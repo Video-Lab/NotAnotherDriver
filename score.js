@@ -25,12 +25,12 @@ function getBrakeSpikes(detectionValues) {
         var avgSpike = 0;
 
         for(var j = i; j <= i+BATCH_SIZE; j++) {
-            avgSpike += d2[j];
+            avgSpike += Math.abs(d2[j]);
         }
         avgSpike /= BATCH_SIZE;
 
         for(var j = i; j <= i+BATCH_SIZE; j++) {
-            if(d2[j] > avgSpike) {
+            if(Math.abs(d2[j]) > avgSpike) {
                 spikes++;
             }
         }
@@ -59,5 +59,5 @@ function score(id) {
     var out = {};
 }
 
-console.log(getBrakeSpikes(parseDetectionFile('555d200e-047b-427e-b742-b9c38a1a8ec3')))
+console.log(getBrakeSpikes(parseDetectionFile('1e19fa82-a064-4fdb-af6c-63f4e8a2069d')))
 // export default score;
