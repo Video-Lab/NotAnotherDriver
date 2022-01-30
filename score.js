@@ -91,7 +91,17 @@ function score(id) {
         out["suggestions"].push("speed")
     }
 
+    fs.writeFile('./data/score_' + id + ".json", JSON.stringify(out), err => {
+        if (err) {
+          console.error(err)
+          return
+        }
+      })
     return out
+}
+
+function writeScoreReport(s) {
+
 }
 
 // console.log(getBrakeSpikes(parseDetectionFile('1e19fa82-a064-4fdb-af6c-63f4e8a2069d')))
